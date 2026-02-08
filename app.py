@@ -187,7 +187,7 @@ elif st.session_state.game_active:
         if prediction == "THREAT":
             st.error(f"🤖 AI ALERT: Suspicious Object Detected (Confidence: {random.randint(80,99)}%)", icon="⚠️")
         else:
-            st.success(f"🤖 AI SCAN: Bag Clear (Confidence: {random.randint(80,99)}%)", icon="✅")
+            st.success(f"🤖 AI SCAN: No Suspicious Object Detected (Confidence: {random.randint(80,99)}%)", icon="✅")
     else:
         # Manual Mode Control Condition
         st.warning("📡 AI SYSTEM OFFLINE: Manual Inspection Required", icon="🛑")
