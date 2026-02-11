@@ -9,7 +9,7 @@ import seaborn as sns
 # 1. APP CONFIGURATION
 # ==========================================
 # Sets the browser tab title and layout width
-st.set_page_config(page_title="SkyGuard Analytics", page_icon="✈️", layout="centered")
+st.set_page_config(page_title="Baggage Inspection Task", page_icon="", layout="centered")
 
 # ==========================================
 # 2. SESSION STATE MANAGEMENT
