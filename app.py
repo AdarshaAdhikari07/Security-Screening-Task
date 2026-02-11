@@ -100,7 +100,7 @@ def restart_game():
 # ==========================================
 # 5. UI LAYOUT
 # ==========================================
-st.title("✈️ SkyGuard Security Interface")
+st.title("Baggage Inspection Task")
 
 # ------------------------------------------
 # SCREEN A: MAIN MENU & BRIEFING
