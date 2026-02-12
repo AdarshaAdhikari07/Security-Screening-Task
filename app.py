@@ -202,14 +202,18 @@ elif st.session_state.game_active:
     # AI Logic (Wizard of Oz)
     if st.session_state.mode == "AI_Assist":
         prediction = "THREAT" if st.session_state.has_threat else "CLEAR"
+        
         # 85% Reliability Check
         if random.random() > 0.85:
             prediction = "CLEAR" if prediction == "THREAT" else "THREAT"
+        
+        # Generate random confidence for realism
+        confidence = random.randint(80, 99)
 
         if prediction == "THREAT":
-            st.error(f"🤖 AI ALERT: Threat Detected", icon="⚠️")
+            st.error(f"🤖 AI ALERT: Threat Detected (Confidence: {confidence}%)", icon="⚠️")
         else:
-            st.success(f"🤖 AI SCAN: Bag Clear", icon="✅")
+            st.success(f"🤖 AI SCAN: Bag Clear (Confidence: {confidence}%)", icon="✅")
 
     c1, c2 = st.columns(2)
     if c1.button("✅ CLEAR"): 
@@ -223,14 +227,12 @@ else:
     # --- END SCREEN ---
     st.success(f"Session Complete. Final Score: {st.session_state.score}")
     
-    # Convert session history to Pandas DataFrame
     if len(st.session_state.history) > 0:
         df = pd.DataFrame(st.session_state.history)
         
         st.divider()
         st.subheader("📈 Performance Report")
         
-        # --- TABBED GRAPHS ---
         tab1, tab2 = st.tabs(["⏱️ Reaction Time", "🎯 Accuracy"])
 
         with tab1:
@@ -241,9 +243,7 @@ else:
 
         with tab2:
             st.markdown("**Decision Accuracy (%)**")
-            # Calculate accuracy percentage
             acc_df = df.groupby("Mode")["Result"].apply(lambda x: (x == 'CORRECT').mean() * 100).reset_index()
-            
             fig2, ax2 = plt.subplots(figsize=(6, 3))
             sns.barplot(data=acc_df, x="Mode", y="Result", palette="magma", ax=ax2)
             ax2.set_ylabel("Accuracy %")
@@ -251,7 +251,6 @@ else:
             st.pyplot(fig2)
         
         st.divider()
-        # --- DOWNLOAD BUTTON ---
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Full Dataset (CSV)", csv, "skyguard_data.csv", "text/csv")
     
