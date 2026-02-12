@@ -8,7 +8,7 @@ import seaborn as sns
 # ==========================================
 # 1. APP CONFIGURATION
 # ==========================================
-st.set_page_config(page_title="Baggage Inspection Task", page_icon="", layout="centered")
+st.set_page_config(page_title="Baggage Inspection Task", page_icon="🛡️", layout="centered")
 
 # ==========================================
 # 2. SESSION STATE MANAGEMENT
@@ -123,9 +123,10 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     
     # === MISSION BRIEFING ===
     st.markdown("### 📋 Mission Briefing")
-    st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.") 
-
-        (**Please note that you are testing a prototype of an AI assistant for the security checks. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not")
+    st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.")
+    
+    # Text block with correct indentation
+    st.info("Please note that you are testing a prototype of an AI assistant. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not.")
     
     st.markdown("#### ⚠️ TARGET THREATS (LOOK FOR THESE):")
     # This creates the dark visual bar with emojis
@@ -135,7 +136,7 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
         unsafe_allow_html=True
     )
     
-    st.info("⚡ **Performance Metric:** Both SPEED and ACCURACY are tracked.")
+    st.warning("⚡ **Performance Metric:** Both SPEED and ACCURACY are tracked.")
     st.divider()
 
     # === MODE SELECTION ===
@@ -213,15 +214,20 @@ elif st.session_state.game_active:
         confidence = random.randint(80, 99)
 
         if prediction == "THREAT":
-            st.error(f"🤖 AI ALERT: Suspicious Object Detected (Confidence: {confidence}%)", icon="⚠️")
+            st.error(f"🤖 AI ALERT: Threat Detected (Confidence: {confidence}%)", icon="⚠️")
         else:
-            st.success(f"🤖 AI SCAN: No Suspicious Object Detected  (Confidence: {confidence}%)", icon="✅")
+            st.success(f"🤖 AI SCAN: Bag Clear (Confidence: {confidence}%)", icon="✅")
 
-    c1, c2 = st.columns(2)
-    if c1.button("✅ CLEAR"): 
+    # --- STACKED BIG BUTTONS (FIXED) ---
+    st.write("") # Spacer
+    
+    # 1. Clear Bag (Green/Primary Style)
+    if st.button("✅ CLEAR BAG", type="primary", use_container_width=True): 
         process_decision(False)
         st.rerun()
-    if c2.button("🚨 THREAT"): 
+        
+    # 2. Report Threat (Red/Secondary Style)
+    if st.button("🚨 REPORT THREAT", use_container_width=True): 
         process_decision(True)
         st.rerun()
 
