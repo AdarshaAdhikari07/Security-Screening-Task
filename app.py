@@ -105,7 +105,7 @@ if not st.session_state.consent_given:
     with st.expander("READ FIRST: Participant Information Sheet", expanded=True):
         st.write("""
         **Project Title:** Human-in-the-Loop AI System: A Comparative Study of Manual and AI-Assisted Airport Screening
-        **Researcher:** Adarsha Adhikari | **Supervisor:** Dr. Mark
+        **Researcher:** Adarsha Adhikari | **Supervisor:** Aram Saeed
         
         **Purpose:** This study investigates 'Automation Bias' and the 'Cost of Verification' in human-AI teaming.
         **Procedure:** You will perform 10 baggage checks. One mode is Manual, the other uses an AI assistant (85% reliable).
