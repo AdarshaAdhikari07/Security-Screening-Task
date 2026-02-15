@@ -87,8 +87,8 @@ def run_system_verification():
     progress_bar = st.progress(0)
     
     for i in range(10000):
-        # 1. Simulate Ground Truth (30% Threat)
-        is_threat = random.random() < 0.30
+        # 1. Simulate Ground Truth (40% Threat)
+        is_threat = random.random() < 0.40
         
         # 2. Simulate AI Advice Logic
         ai_advice = "THREAT" if is_threat else "CLEAR"
