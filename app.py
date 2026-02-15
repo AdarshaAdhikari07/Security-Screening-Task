@@ -37,8 +37,8 @@ def generate_bag():
     items = random.sample(SAFE_ITEMS, k=random.randint(4, 8))
     threat = False
     
-    # Ground Truth Generation (30% Threat Probability)
-    if random.random() < 0.30:
+    # Ground Truth Generation (40% Threat Probability)
+    if random.random() < 0.40:
         items.append(random.choice(THREAT_ITEMS))
         threat = True
     
