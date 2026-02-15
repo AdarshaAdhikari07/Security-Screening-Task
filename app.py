@@ -123,7 +123,7 @@ if not st.session_state.consent_given:
 if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("### 📋 Mission Briefing")
     st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.")
-    st.info("You are testing a prototype AI assistant. Examine the luggage and decide if it is safe or not.")
+    st.info("Please note that you are testing a prototype of an AI assistant. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not")
     
     st.markdown("#### ⚠️ TARGET THREATS (LOOK FOR THESE):")
     threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
