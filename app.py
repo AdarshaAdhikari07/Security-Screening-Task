@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # ==========================================
-# 1. APP CONFIGURATION & STYLING
+# 1. APP CONFIGURATION
 # ==========================================
-st.set_page_config(page_title="Baggage Inspection Task", page_icon="🔍", layout="centered")
+st.set_page_config(page_title="Baggage Inspection Task", page_icon="", layout="centered")
 
-# Custom CSS for Red Decision Buttons (Clear Bag & Report Threat)
+# Custom CSS for Red Decision Buttons
 st.markdown("""
     <style>
     div.stButton > button {
@@ -100,7 +100,7 @@ def run_system_verification():
         is_threat = random.random() < 0.40
         ai_advice = "THREAT" if is_threat else "CLEAR"
         is_ai_correct = True
-        if random.random() > 0.85: # Target reliability: 85%
+        if random.random() > 0.85: # 85% Reliability Target
             is_ai_correct = False
             ai_advice = "CLEAR" if ai_advice == "THREAT" else "THREAT"
         logs.append({"Trial": i, "Ground_Truth": is_threat, "AI_Advice": ai_advice, "AI_Correct": is_ai_correct})
@@ -109,20 +109,21 @@ def run_system_verification():
     st.session_state.verification_result = pd.DataFrame(logs)
 
 # ==========================================
-# 5. UI LAYOUT & PHASES
+# 5. UI LAYOUT & ETHICS GATEWAY
 # ==========================================
-st.title("Baggage Inspection Task")
+st.title(" Baggage Inspection Task")
 
-# PHASE 1: INFORMED CONSENT
+# --- PHASE 1: INFORMED CONSENT ---
 if not st.session_state.consent_given:
     st.header("📄 Participant Information & Consent")
     with st.expander("READ FIRST: Participant Information Sheet", expanded=True):
         st.subheader("Human-in-the-Loop AI System")
         st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** Aram Saeed")
-        st.markdown("""
+        st.write("**:** ")
+        st.markdown(f"""
         **Purpose:** This research compares Manual and AI-Assisted modes to study "Automation Bias" and "Cost of Verification".
         **Procedure:** You will inspect 10 bags. One mode is Manual, the other uses an 85% reliable AI assistant.
-        **Privacy:** No names or IP addresses are recorded.
+        **Privacy:** No names, IP addresses,  are recorded.
         **Data Submission:** Download the anonymous CSV and email it to **adhika108@coventry.ac.uk**.
         """)
 
@@ -134,7 +135,7 @@ if not st.session_state.consent_given:
     c4 = st.checkbox("I understand the results will be used for academic research.")
     c5 = st.checkbox("I agree to take part and confirm I am 18+ years of age.")
 
-    if st.button("I Consent & Agree to Participate"):
+    if st.button("I Consent & Agree to Participate") : 
         if all([c1, c2, c3, c4, c5]):
             st.session_state.consent_given = True
             st.rerun()
@@ -142,10 +143,10 @@ if not st.session_state.consent_given:
             st.error("Please check all boxes to proceed.")
     st.stop()
 
-# PHASE 2: MAIN MENU
+# --- PHASE 2: MAIN MENU ---
 if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("### 📋 Mission Briefing")
-    st.info("Role: Security Officer. Objective: Detect prohibited items. Use your own judgment as the AI prototype is 85% reliable.")
+    st.info("Role: Security Officer. Objective: Detect prohibited items.Please note that you are testing a prototype of an AI assistant. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not .")
     
     st.markdown("#### ⚠️ TARGET THREATS:")
     threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
@@ -154,24 +155,26 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     col1, col2 = st.columns(2)
     with col1:
         st.success("👤 **Participant Mode**")
-        if st.button("Start Manual Mode"):
+        if st.button("Start Manual Mode", use_container_width=True):
             st.session_state.mode, st.session_state.game_active = "Manual", True
             generate_bag(); st.rerun()
-        if st.button("Start AI-Assisted Mode"):
+        if st.button("Start AI-Assisted Mode", use_container_width=True):
             st.session_state.mode, st.session_state.game_active = "AI_Assist", True
             generate_bag(); st.rerun()
     with col2:
         st.warning("⚙️ **Developer Mode**")
-        if st.button("🛠️ Run System Verification"):
+        if st.button("🛠️ Run System Verification", use_container_width=True):
             run_system_verification()
+           
         
         if st.session_state.verification_result is not None:
             df_audit = st.session_state.verification_result
             st.write(f"**Trials:** {len(df_audit):,}")
             st.write(f"**AI Reliability:** {(df_audit['AI_Correct'].mean()) * 100:.2f}%")
             st.write(f"**Threat Rate:** {(df_audit['Ground_Truth'].mean()) * 100:.2f}%")
+           
 
-# PHASE 3: GAME LOOP
+# --- PHASE 3: GAME LOOP ---
 elif st.session_state.game_active:
     st.progress(st.session_state.rounds / 10, f"Bag {st.session_state.rounds+1}/10")
     bag_html = " ".join([f"<span style='font-size:55px; padding:10px;'>{x}</span>" for x in st.session_state.current_bag])
@@ -189,11 +192,11 @@ elif st.session_state.game_active:
     st.write("")
     col_a, col_b = st.columns(2)
     with col_a:
-        if st.button("✅ CLEAR BAG", use_container_width=True): process_decision(False); st.rerun()
+        if st.button("✅ CLEAR BAG", use_container_width=True): process_decision(False); st.rerun() 
     with col_b:
         if st.button("🚨 REPORT THREAT", use_container_width=True): process_decision(True); st.rerun()
 
-# PHASE 4: END SCREEN
+# --- PHASE 4: END SCREEN & SUBMISSION ---
 else:
     st.success(f"Session Complete. Final Score: {st.session_state.score}")
     if len(st.session_state.history) > 0:
@@ -202,16 +205,21 @@ else:
         st.subheader("📈 Performance Report")
         
         tab1, tab2, tab3 = st.tabs(["⏱️ Reaction Time", "🎯 Accuracy", "📄 Raw Data"])
+        
         with tab1:
             fig1, ax1 = plt.subplots(figsize=(8, 4))
             sns.barplot(data=df, x="Mode", y="Time", hue="Result", palette="viridis", ax=ax1)
+            ax1.set_title("Response Latency per Mode")
             st.pyplot(fig1)
+            
         with tab2:
             fig2, ax2 = plt.subplots(figsize=(8, 4))
             acc_df = df.groupby("Mode")["Result"].apply(lambda x: (x == 'CORRECT').mean() * 100).reset_index()
             sns.barplot(data=acc_df, x="Mode", y="Result", palette="magma", ax=ax2)
             ax2.set_ylim(0, 105)
+            ax2.set_ylabel("Accuracy (%)")
             st.pyplot(fig2)
+
         with tab3:
             st.dataframe(df, use_container_width=True)
         
