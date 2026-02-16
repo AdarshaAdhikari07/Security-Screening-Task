@@ -170,9 +170,9 @@ elif st.session_state.game_active:
     st.write("")
     col_a, col_b = st.columns(2)
     with col_a:
-        if st.button("✅ CLEAR BAG", use_container_width=True): process_decision(False); st.rerun() icon="🛑"
+        if st.button("✅ CLEAR BAG", use_container_width=True): process_decision(False); st.rerun() 
     with col_b:
-        if st.button("🚨 REPORT THREAT", use_container_width=True): process_decision(True); st.rerun() icon="🛑"
+        if st.button("🚨 REPORT THREAT", use_container_width=True): process_decision(True); st.rerun()
 
 # --- PHASE 4: END SCREEN & SUBMISSION ---
 else:
