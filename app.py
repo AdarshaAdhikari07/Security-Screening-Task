@@ -152,11 +152,7 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
             st.write(f"**Trials:** {len(df_audit):,}")
             st.write(f"**AI Reliability:** {(df_audit['AI_Correct'].mean()) * 100:.2f}%")
             st.write(f"**Threat Rate:** {(df_audit['Ground_Truth'].mean()) * 100:.2f}%")
-            # Monte Carlo Graph
-            fig_v, ax_v = plt.subplots(figsize=(4, 2))
-            sns.countplot(data=df_v, x="AI_Correct", palette="RdYlGn", ax=ax_v)
-            ax_v.set_title("10,000 Trial Distribution")
-            st.pyplot(fig_v)
+           
 
 # --- PHASE 3: GAME LOOP ---
 elif st.session_state.game_active:
