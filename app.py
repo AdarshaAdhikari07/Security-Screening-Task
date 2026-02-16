@@ -73,7 +73,7 @@ def restart_game():
 # ==========================================
 # 5. UI LAYOUT & ETHICS GATEWAY
 # ==========================================
-st.title("🔍 Baggage Inspection Task")
+st.title(" Baggage Inspection Task")
 
 # --- PHASE 1: INFORMED CONSENT (UNIVERSITY TEMPLATE) ---
 if not st.session_state.consent_given:
