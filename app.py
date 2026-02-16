@@ -8,7 +8,7 @@ import seaborn as sns
 # ==========================================
 # 1. APP CONFIGURATION
 # ==========================================
-st.set_page_config(page_title="Baggage Inspection Task", page_icon="🔍", layout="centered")
+st.set_page_config(page_title="Baggage Inspection Task", page_icon="", layout="centered")
 
 # ==========================================
 # 2. SESSION STATE MANAGEMENT
@@ -91,7 +91,7 @@ def run_system_verification():
 # ==========================================
 # 5. UI LAYOUT & ETHICS GATEWAY
 # ==========================================
-st.title("🔍 Baggage Inspection Task")
+st.title(" Baggage Inspection Task")
 
 # --- PHASE 1: INFORMED CONSENT ---
 if not st.session_state.consent_given:
@@ -101,10 +101,10 @@ if not st.session_state.consent_given:
         st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** Aram Saeed")
         st.write("**Ethics Reference:** P192604")
         st.markdown(f"""
-        **Purpose:** This research compares Manual and AI-Assisted modes to study "Automation Bias" and "Cost of Verification"[cite: 95].
-        **Procedure:** You will inspect 10 bags. One mode is Manual, the other uses an 85% reliable AI assistant[cite: 96].
-        **Privacy:** No names, IP addresses, or student IDs are recorded[cite: 97].
-        **Data Submission:** Download the anonymous CSV and email it to **adhika108@coventry.ac.uk**[cite: 98].
+        **Purpose:** This research compares Manual and AI-Assisted modes to study "Automation Bias" and "Cost of Verification".
+        **Procedure:** You will inspect 10 bags. One mode is Manual, the other uses an 85% reliable AI assistant.
+        **Privacy:** No names, IP addresses, or student IDs are recorded.
+        **Data Submission:** Download the anonymous CSV and email it to **adhika108@coventry.ac.uk**.
         """)
 
     st.subheader("✅ Informed Consent")
