@@ -99,11 +99,11 @@ if not st.session_state.consent_given:
     with st.expander("READ FIRST: Participant Information Sheet", expanded=True):
         st.subheader("Human-in-the-Loop AI System")
         st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** Aram Saeed")
-        st.write("**Ethics Reference:** P192604")
+        st.write("**:** ")
         st.markdown(f"""
         **Purpose:** This research compares Manual and AI-Assisted modes to study "Automation Bias" and "Cost of Verification".
         **Procedure:** You will inspect 10 bags. One mode is Manual, the other uses an 85% reliable AI assistant.
-        **Privacy:** No names, IP addresses, or student IDs are recorded.
+        **Privacy:** No names, IP addresses,  are recorded.
         **Data Submission:** Download the anonymous CSV and email it to **adhika108@coventry.ac.uk**.
         """)
 
@@ -126,7 +126,7 @@ if not st.session_state.consent_given:
 # --- PHASE 2: MAIN MENU ---
 if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("### 📋 Mission Briefing")
-    st.info("Role: Security Officer. Objective: Detect prohibited items[cite: 112, 113].")
+    st.info("Role: Security Officer. Objective: Detect prohibited items.Please note that you are testing a prototype of an AI assistant. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not .")
     
     st.markdown("#### ⚠️ TARGET THREATS:")
     threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
