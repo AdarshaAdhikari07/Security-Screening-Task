@@ -119,10 +119,10 @@ if not st.session_state.consent_given:
     with st.expander("READ FIRST: Participant Information Sheet", expanded=True):
         st.subheader("Human-in-the-Loop AI System")
         st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** Aram Saeed")
-        st.write("**:** ")
+        st.write("**** ")
         st.markdown(f"""
         **Purpose:** This research compares Manual and AI-Assisted modes to study "Automation Bias" and "Cost of Verification".
-        **Procedure:** You will inspect 10 bags. One mode is Manual, the other uses an 85% reliable AI assistant.
+        **Procedure:** You will inspect 10 bags each on two differents modes. One mode is Manual, the other is AI assistant.
         **Privacy:** No names, IP addresses,  are recorded.
         **Data Submission:** Download the anonymous CSV and email it to **adhika108@coventry.ac.uk**.
         """)
