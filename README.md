@@ -1,65 +1,56 @@
-# Baggage Inspection Task
+========================================================================
+HUMAN-IN-THE-LOOP AI: AIRPORT SCREENING SIMULATION
+========================================================================
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://skyguard-project-2025.streamlit.app/)
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![Status](https://img.shields.io/badge/Status-Live-success)
+1. PROJECT OVERVIEW
+-------------------
+This software is a 'Baggage Inspection System' developed in Python
+(Streamlit) for research into "Automation Bias" and "Verification
+Latency" in airport security screening. 
 
-## 📄 Project Overview
-**SkyGuard** is a Python-based experimental instrument designed to investigate **Automation Bias**, **Trust Calibration**, and **Cognitive Load** in Human-AI Teaming scenarios. 
+Instead of static images, the system uses a Stochastic Procedural Content 
+Generation (PCG) engine to create randomized luggage bags for every trial, 
+ensuring the assessment of true visual vigilance.
 
-This simulation mimics a high-stakes X-Ray baggage screening task at an airport. It serves as the primary data collection tool for my Master's Dissertation: *"Investigating the Impact of Imperfect AI Assistance on Human Vigilance in Security Screening."*
+2. CORE FEATURES
+----------------
+* Stochastic PCG: Randomizes  luggage layouts using Unicode symbols 
+  for threat and non-threat items.
+* Imperfect AI Agent: Simulated assistant with 85% reliability (P=0.85) 
+  to test trust calibration.
+* Telemetry Logging: Captures reaction time (ms), decision accuracy, 
+  and interaction mode into a structured CSV format.
 
-👉 **[Live Demo](https://skyguard-project-2025.streamlit.app/)**
+3. TARGET THREATS
+-----------------
+Participants act as Security Officers to identify:
+- Kinetic Weapons: Guns and Knives.
+- Explosives: Bombs and Pyrotechnics.
+- Hazardous Materials: Biohazards and Toxic Substances.
 
-## 🎯 Research Objectives
-The simulation is designed to measure:
-1.  **Reaction Time:** Does AI assistance speed up or slow down decision-making (Cost of Verification)?
-2.  **Accuracy:** Does the presence of AI reduce human error or cause "blind compliance"?
-3.  **Automation Bias:** How do operators react when the AI makes a deliberate error?
+4. PROJECT TIMELINE
+-------------------
+- Phase 1 (Weeks 1-3): Development and  Monte Carlo Audit.
+- Phase 2 (Weeks 4-6): Data Collection (N=30) and Statistical Analysis.
+- Phase 3 (Weeks 7-8): Final Report Preparation (Deadline: April 13).
 
-## 🧪 Experimental Design
-The experiment utilizes a **Within-Subjects Design** with two distinct conditions:
+5. INSTALLATION & USAGE
+-----------------------
+Requirements: Python 3.9+, Streamlit, Pandas, NumPy, SciPy.
 
-| Condition | Description |
-| :--- | :--- |
-| **🛑 Manual Mode** | The user acts alone. They must visually scan the bag for threats (Guns, Knives, Bombs) without assistance. |
-| **🤖 AI Assist Mode** | The user is supported by a simulated AI agent. The AI provides a text alert (Clear/Threat) with a confidence score. |
+1. Install dependencies:
+   pip install -r requirements.txt
 
-### The "Wizard of Oz" AI Model
-To ensure scientific control, the AI is not a "Black Box" neural network. It is a probabilistic model with a **fixed reliability of 85%**.
-* **True Positives/Negatives:** 85% of the time, the AI is correct.
-* **False Positives/Negatives:** 15% of the time, the AI deliberately errors to test human vigilance.
+2. Run the application:
+   streamlit run app.py
 
-## 🛠️ Tech Stack
-This project was engineered using the **Python** ecosystem and deployed via **Streamlit Cloud**.
+6. ETHICAL CONSIDERATIONS
+-------------------------
+Project Ref: P192604.
+The study uses 'Privacy by Design'—no personal identifiable information 
+(PII) is captured. All participants must pass a 5-point 
+informed consent checklist before beginning
 
-* **Frontend/UI:** [Streamlit](https://streamlit.io/) (Web-based interactive interface)
-* **Data Processing:** [Pandas](https://pandas.pydata.org/) (Real-time data logging and CSV export)
-* **Visualization:** [Matplotlib](https://matplotlib.org/) & [Seaborn](https://seaborn.pydata.org/) (Instant feedback charts)
-* **Logic:** Python `random` & `time` modules for stochastic procedural generation.
-
-## 🚀 How to Run Locally
-If you wish to run this code on your local machine instead of the cloud:
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/AdarshaAdhikari07/SkyGuard-Project.git](https://github.com/AdarshaAdhikari07/SkyGuard-Project.git)
-    cd SkyGuard-Project
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3.  **Run the app:**
-    ```bash
-    streamlit run app.py
-    ```
-
-## 📂 Project Structure
-```text
-SkyGuard-Project/
-├── app.py              # Main application source code
-├── requirements.txt    # List of Python dependencies
-└── README.md           # Project documentation
+7. CONTACT
+----------
+Student Name: Adarsha Adhikari 
