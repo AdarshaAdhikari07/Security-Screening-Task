@@ -54,10 +54,10 @@ THREAT_ITEMS = ['🔫', '🔪', '💣', '🧨', '🩸', '☠️']
 # 4. CORE FUNCTIONS
 # ==========================================
 def generate_bag():
-    """Creates a unique bag with a 40% threat probability."""
+    """Creates a unique bag with a 50% threat probability."""
     items = random.sample(SAFE_ITEMS, k=random.randint(4, 8))
     threat = False
-    if random.random() < 0.40: 
+    if random.random() < 0.50: 
         items.append(random.choice(THREAT_ITEMS))
         threat = True
     random.shuffle(items)
@@ -97,7 +97,7 @@ def run_system_verification():
     logs = []
     progress_bar = st.progress(0)
     for i in range(10000):
-        is_threat = random.random() < 0.40
+        is_threat = random.random() < 0.50
         ai_advice = "THREAT" if is_threat else "CLEAR"
         is_ai_correct = True
         if random.random() > 0.85: # 85% Reliability Target
@@ -122,7 +122,7 @@ if not st.session_state.consent_given:
         st.write("**** ")
         st.markdown(f"""
         **Purpose:** This research compares Manual and AI-Assisted modes to study "Automation Bias" and "Cost of Verification".
-        **Procedure:** You will inspect 10 bags each on two differents modes. One mode is Manual, the other is AI assistant.
+        **Procedure:** You have to detect threat item.You will inspect 10 bags each on two differents modes. One mode is Manual, the other is AI assistant.
         **Privacy:** No names, IP addresses,  are recorded.
         **Data Submission:** Download the anonymous CSV and email it to **adhika108@coventry.ac.uk**.
         """)
