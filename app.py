@@ -118,7 +118,7 @@ if not st.session_state.consent_given:
     st.header("📄 Participant Information & Consent")
     with st.expander("READ FIRST: Participant Information Sheet", expanded=True):
         st.subheader("Human-in-the-Loop AI System")
-        st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** Aram Saeed")
+        st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** ")
         st.write("**** ")
         st.markdown(f"""
         **Purpose:** This research compares Manual and AI-Assisted modes to study "Automation Bias" and "Cost of Verification".
