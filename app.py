@@ -150,8 +150,6 @@ if not st.session_state.consent_given:
 if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("### 📋 Mission Briefing")
    import streamlit as st
-
-# Combined Instructional Block for Participants
 st.info("""
 **Role:** Security Officer.
 **Objective:** Detect prohibited items.
@@ -161,6 +159,9 @@ st.info("""
 * You are testing a **prototype AI assistant** designed to identify potential threats.
 * Please examine the luggage and decide, based on your **own judgment**, whether it is safe or not.
 """)
+
+
+
     
     st.markdown("#### ⚠️ TARGET THREATS:")
     threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
