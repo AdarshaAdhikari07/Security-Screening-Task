@@ -8,7 +8,7 @@ import seaborn as sns
 # ==========================================
 # 1. APP CONFIGURATION
 # ==========================================
-st.set_page_config(page_title="Baggage Inspection Task", page_icon="", layout="centered")
+st.set_page_config(page_title="Security Screening Task", page_icon="", layout="centered")
 
 # Custom CSS for Red Decision Buttons
 st.markdown("""
@@ -111,7 +111,7 @@ def run_system_verification():
 # ==========================================
 # 5. UI LAYOUT & ETHICS GATEWAY
 # ==========================================
-st.title(" Baggage Inspection Task")
+st.title(" Security Screening Task")
 
 # --- PHASE 1: INFORMED CONSENT ---
 if not st.session_state.consent_given:
