@@ -149,7 +149,6 @@ if not st.session_state.consent_given:
 # --- PHASE 2: MAIN MENU ---
 if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("### 📋 Mission Briefing")
-    # Removed the second import statement from here
     st.info("""
     **Role:** Security Officer.
     **Objective:** Detect prohibited threat items.
@@ -160,21 +159,18 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     * Please examine the luggage and decide, based on your **own judgment**, whether it is safe or not.
     """)
 
+    # --- Display Target Threats ---
+    st.markdown("#### ⚠️ TARGET THREATS (Prohibited):")
+    threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
+    st.markdown(f"<div style='background-color: #262730; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;'>{threat_html}</div>", unsafe_allow_html=True)
 
+    # --- NEW: Display All Safe Items ---
+    st.markdown("#### ✅ SAFE ITEMS (Distractors):")
+    safe_html = " ".join([f"<span style='font-size:35px; margin:0 8px;'>{x}</span>" for x in SAFE_ITEMS])
+    st.markdown(f"<div style='background-color: #1E1E1E; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; border: 1px solid #4CAF50;'>{safe_html}</div>", unsafe_allow_html=True)
 
-    
-  # --- Display Target Threats ---
-st.markdown("#### ⚠️ TARGET THREATS (Prohibited):")
-threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
-st.markdown(f"<div style='background-color: #262730; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;'>{threat_html}</div>", unsafe_allow_html=True)
-
-# --- NEW: Display All Safe Items ---
-st.markdown("#### ✅ SAFE ITEMS (Distractors):")
-safe_html = " ".join([f"<span style='font-size:35px; margin:0 8px;'>{x}</span>" for x in SAFE_ITEMS])
-st.markdown(f"<div style='background-color: #1E1E1E; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; border: 1px solid #4CAF50;'>{safe_html}</div>", unsafe_allow_html=True)
-
-
-col1, col2 = st.columns(2)
+    # All these lines must have the EXACT same indentation
+    col1, col2 = st.columns(2)
     with col1:
         st.success("👤 **Participant Mode**")
         if st.button("Start Manual Mode", use_container_width=True):
