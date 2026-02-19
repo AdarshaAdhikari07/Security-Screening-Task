@@ -124,10 +124,10 @@ if not st.session_state.consent_given:
         st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** Dr Mark Eslaw ")
         st.write("**** ")
         st.markdown(f"""
-        **Purpose:** This research compares prototype of Manual and AI-Assisted modes for security screening to study "Automation Bias" .
-        **Procedure:** You have to detect threat item.You will inspect 10 bags each on two differents modes. One mode is Manual, the other is AI assistant.
-        **Privacy:** No names, IP addresses,  are recorded.
-        **Data Submission:** Download the anonymous CSV and email it to **adhika108@coventry.ac.uk**.
+        **Purpose:** This research aims to compare the prototypes of Manual and Ai-Assisted for security screening in order to study "Autumation Bias"" .
+        **Procedure:** You are required to detect threat items by inspecting 10 bags, each in two different modes : Manual and Ai-Assisted.
+        **Privacy:** No names, IP addresses, or Personal Identified Data  are recorded.
+        **Data Submission:** After completing the inspection download the anonymous CSV file and email it to **adhika108@coventry.ac.uk**.
         """)
 
     st.subheader("✅ Informed Consent")
