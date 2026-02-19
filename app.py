@@ -125,8 +125,11 @@ if not st.session_state.consent_given:
         st.write("**** ")
         st.markdown(f"""
         **Purpose:** This research aims to compare the prototypes of Manual and AI-Assisted modes for security screening in order to study "Automation Bias" .
+        
         **Procedure:** You are required to detect threat items by inspecting 10 bags, each in two different modes : Manual and AI-Assisted.
+        
         **Privacy:** No names, IP addresses, or Personal Identified Data  are recorded.
+        
         **Data Submission:** After completing the inspection download the anonymous CSV file and email it to **adhika108@coventry.ac.uk**.
         """)
 
