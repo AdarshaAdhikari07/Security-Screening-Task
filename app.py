@@ -6,11 +6,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # ==========================================
-# 1. APP CONFIGURATION
+# 1. APP CONFIGURATION & UI STYLING
 # ==========================================
+# Defining page metadata and a centered layout to minimize participant eye-strain
 st.set_page_config(page_title="Security Screening Task", page_icon="", layout="centered")
 
 # Custom CSS for Red Decision Buttons
+# This ensures that 'Action' buttons are highly visible, standardizing the visual search time across all participants
 st.markdown("""
     <style>
     div.stButton > button {
@@ -31,8 +33,10 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. SESSION STATE MANAGEMENT
+# 2. SESSION STATE MANAGEMENT (RESEARCH TELEMETRY)
 # ==========================================
+# Using Streamlit's session_state to maintain persistent variables across trial re-runs
+# This acts as the 'Temporary Database' for storing real-time performance data
 if 'consent_given' not in st.session_state: st.session_state.consent_given = False
 if 'score' not in st.session_state: st.session_state.score = 0
 if 'rounds' not in st.session_state: st.session_state.rounds = 0
@@ -45,8 +49,9 @@ if 'mode' not in st.session_state: st.session_state.mode = "Manual"
 if 'verification_result' not in st.session_state: st.session_state.verification_result = None
 
 # ==========================================
-# 3. ASSET LIBRARY
+# 3. ASSET LIBRARY (SIMULATED STIMULI)
 # ==========================================
+# Symbolic icons used to isolate cognitive screening ability from professional domain knowledge
 SAFE_ITEMS = [
     '👕', '👖', '👗', '👟', '🎩', '📚', '🧸', '🥪', '🕶️', 
     '🎧', '📱', '🧴', '📔', '🖊️', '☂️', '🧥', '🪥'
@@ -54,26 +59,45 @@ SAFE_ITEMS = [
 THREAT_ITEMS = ['✂️', '🔥', '💧', '🧨', '🚬', '🧪']
 
 # ==========================================
-# 4. CORE FUNCTIONS
+# 4. CORE RESEARCH FUNCTIONS
 # ==========================================
 def generate_bag():
-    """Creates a unique bag with a 40% threat probability."""
+    """
+    Stochastic Generator: Creates a unique trial bag with a 40% threat prevalence.
+    Ensures visual variety to prevent participant fatigue or memorization effects.
+    """
+    # Sample 4-8 safe items to simulate luggage density
     items = random.sample(SAFE_ITEMS, k=random.randint(4, 8))
     threat = False
+    
+    # Bernoulli trial for threat presence (Standardized 40% for vigilance studies)
     if random.random() < 0.40: 
         items.append(random.choice(THREAT_ITEMS))
         threat = True
+    
+    # Randomize position to prevent spatial-bias during the visual search task
     random.shuffle(items)
     st.session_state.current_bag = items
     st.session_state.has_threat = threat
+    
+    # Timestamp used to calculate reaction time (Latency)
     st.session_state.start_time = time.time()
 
 def process_decision(user_rejected):
-    """Logs user reaction time and accuracy."""
+    """
+    Telemetry Processor: Logs User Latency, Mode, and Ground Truth.
+    Maps outcomes for Signal Detection Theory (Hits, False Alarms, etc.).
+    """
+    # Calculate Response Latency in seconds
     rt = round(time.time() - st.session_state.start_time, 3)
+    
+    # Cross-reference user input against Ground Truth
     correct = (user_rejected == st.session_state.has_threat)
     result_str = "CORRECT" if correct else "ERROR"
+    
     if correct: st.session_state.score += 10
+    
+    # Log detailed trial record for later statistical analysis (CSV output)
     st.session_state.history.append({
         "Round": st.session_state.rounds + 1,
         "Mode": st.session_state.mode,
@@ -82,13 +106,15 @@ def process_decision(user_rejected):
         "Result": result_str,
         "Time": rt
     })
+    
     st.session_state.rounds += 1
     if st.session_state.rounds < 10:
-        generate_bag()
+        generate_bag() # Proceed to next stimulus
     else:
-        st.session_state.game_active = False
+        st.session_state.game_active = False # End of block reached
 
 def restart_game():
+    """System Reset: Clears session cache to allow for a clean new trial run."""
     st.session_state.rounds = 0
     st.session_state.score = 0
     st.session_state.game_active = False
@@ -96,27 +122,35 @@ def restart_game():
     st.rerun()
 
 def run_system_verification():
-    """Monte Carlo Simulation: Runs 10,000 trials to verify AI reliability."""
+    """
+    Monte Carlo System Verification: Validates algorithm convergence.
+    Runs 10,000 simulations to prove the 85% AI Reliability logic is mathematically sound.
+    """
     logs = []
     progress_bar = st.progress(0)
     for i in range(10000):
         is_threat = random.random() < 0.40
         ai_advice = "THREAT" if is_threat else "CLEAR"
         is_ai_correct = True
-        if random.random() > 0.85: # 85% Reliability Target
+        
+        # Stochastic Error Injection (Forces 15% error rate to test Automation Bias)
+        if random.random() > 0.85: 
             is_ai_correct = False
             ai_advice = "CLEAR" if ai_advice == "THREAT" else "THREAT"
+            
         logs.append({"Trial": i, "Ground_Truth": is_threat, "AI_Advice": ai_advice, "AI_Correct": is_ai_correct})
         if i % 1000 == 0: progress_bar.progress(i / 10000)
+    
     progress_bar.progress(1.0)
+    # Store verification results for visual proof in Developer Mode
     st.session_state.verification_result = pd.DataFrame(logs)
 
 # ==========================================
-# 5. UI LAYOUT & ETHICS GATEWAY
+# 5. UI LAYOUT: ETHICS GATEWAY (PHASE 1)
 # ==========================================
 st.title(" Security Screening Task")
 
-# --- PHASE 1: INFORMED CONSENT ---
+# Ensure research follows BPS/Institutional Ethical guidelines for Informed Consent
 if not st.session_state.consent_given:
     st.header("📄 Participant Information & Consent")
     with st.expander("READ FIRST: Participant Information Sheet", expanded=True):
@@ -141,6 +175,7 @@ if not st.session_state.consent_given:
     c4 = st.checkbox("I understand the results will be used for academic research.")
     c5 = st.checkbox("I agree to take part and confirm I am 18+ years of age.")
 
+    # Validation: Participants cannot proceed unless all boxes are checked
     if st.button("I Consent & Agree to Participate") : 
         if all([c1, c2, c3, c4, c5]):
             st.session_state.consent_given = True
@@ -149,7 +184,9 @@ if not st.session_state.consent_given:
             st.error("Please check all boxes to proceed.")
     st.stop()
 
-# --- PHASE 2: MAIN MENU ---
+# ==========================================
+# 6. UI: MAIN MENU & MISSION BRIEFING (PHASE 2)
+# ==========================================
 if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("### 📋 Mission Briefing")
     st.info("""
@@ -162,17 +199,17 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     * Please examine the luggage and decide, based on your **own judgment**, whether it is safe or not.
     """)
 
-    # --- Display Target Threats ---
+    # --- Calibration Area: Displays Target Threats ---
     st.markdown("#### ⚠️ TARGET THREATS (Prohibited):")
     threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
     st.markdown(f"<div style='background-color: #262730; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;'>{threat_html}</div>", unsafe_allow_html=True)
 
-    # --- NEW: Display All Safe Items ---
+    # --- NEW: Baseline Display (Safe Items) ---
     st.markdown("#### ✅ SAFE ITEMS (Secure):")
     safe_html = " ".join([f"<span style='font-size:35px; margin:0 8px;'>{x}</span>" for x in SAFE_ITEMS])
     st.markdown(f"<div style='background-color: #1E1E1E; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; border: 1px solid #4CAF50;'>{safe_html}</div>", unsafe_allow_html=True)
 
-    # All these lines must have the EXACT same indentation
+    # Participant and Developer separation for experimental control
     col1, col2 = st.columns(2)
     with col1:
         st.success("👤 **Participant Mode**")
@@ -187,6 +224,7 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
 
     with col2:
         st.warning("⚙️ **Developer Mode**")
+        # Function to audit the internal math of the app before live testing
         if st.button("🛠️ Run System Verification", use_container_width=True):
             run_system_verification()
         if st.session_state.verification_result is not None:
@@ -194,31 +232,44 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
             st.write(f"**Trials:** {len(df_audit):,}")
             st.write(f"**AI Reliability:** {(df_audit['AI_Correct'].mean()) * 100:.2f}%")
             st.write(f"**Threat Rate:** {(df_audit['Ground_Truth'].mean()) * 100:.2f}%")
-           
+            
 
-# --- PHASE 3: GAME LOOP ---
+# ==========================================
+# 7. UI: ACTIVE SCREENING LOOP (PHASE 3)
+# ==========================================
 elif st.session_state.game_active:
     st.progress(st.session_state.rounds / 10, f"Bag {st.session_state.rounds+1}/10")
+    
+    # Stimulus Display Area
     bag_html = " ".join([f"<span style='font-size:55px; padding:10px;'>{x}</span>" for x in st.session_state.current_bag])
     st.markdown(f"<div style='background:#111; border:4px solid #444; border-radius:15px; padding:30px; text-align:center;'>{bag_html}</div>", unsafe_allow_html=True)
 
+    # Implementation of the Independent Variable: AI Advice
     if st.session_state.mode == "AI_Assist":
+        # Simulate AI prediction (Imperfect: 85% Accurate)
         prediction = "THREAT" if st.session_state.has_threat else "CLEAR"
         if random.random() > 0.85: prediction = "CLEAR" if prediction == "THREAT" else "THREAT"
         confidence = random.randint(80, 99)
+        
+        # Display AI Decision Support to the User
         if prediction == "THREAT": st.error(f"🤖 AI ALERT: Suspicious Object Detected ({confidence}%)", icon="⚠️")
         else: st.success(f"🤖 AI SCAN: No Suspicious Object Detected ({confidence}%)", icon="✅")
     else:
+        # Control Condition: No Decision Support
         st.warning("📡 AI SYSTEM OFFLINE: Manual Inspection Required", icon="🛑")
 
     st.write("")
     col_a, col_b = st.columns(2)
     with col_a:
+        # Captures Signal Detection 'Negative' response
         if st.button("✅ CLEAR BAG", use_container_width=True): process_decision(False); st.rerun() 
     with col_b:
+        # Captures Signal Detection 'Positive' response
         if st.button("🚨 REPORT THREAT", use_container_width=True): process_decision(True); st.rerun()
 
-# --- PHASE 4: END SCREEN & SUBMISSION ---
+# ==========================================
+# 8. UI: DATA VISUALIZATION & SUBMISSION (PHASE 4)
+# ==========================================
 else:
     st.success(f"Session Complete. Final Score: {st.session_state.score}")
     if len(st.session_state.history) > 0:
@@ -226,15 +277,18 @@ else:
         st.divider()
         st.subheader("📈 Performance Report")
         
+        # Dashboard showing comparative analytics for the participant
         tab1, tab2, tab3 = st.tabs(["⏱️ Reaction Time", "🎯 Accuracy", "📄 Raw Data"])
         
         with tab1:
+            # Latency Chart: Visualization of Response Times
             fig1, ax1 = plt.subplots(figsize=(8, 4))
             sns.barplot(data=df, x="Mode", y="Time", hue="Result", palette="viridis", ax=ax1)
             ax1.set_title("Response Latency per Mode")
             st.pyplot(fig1)
             
         with tab2:
+            # Accuracy Chart: Visualization of Correct vs Error rates
             fig2, ax2 = plt.subplots(figsize=(8, 4))
             acc_df = df.groupby("Mode")["Result"].apply(lambda x: (x == 'CORRECT').mean() * 100).reset_index()
             sns.barplot(data=acc_df, x="Mode", y="Result", palette="magma", ax=ax2)
@@ -243,13 +297,16 @@ else:
             st.pyplot(fig2)
 
         with tab3:
+            # Visual check for the raw telemetry log
             st.dataframe(df, use_container_width=True)
         
+        # Final Instructions for Data Collection
         st.error(" ACTION REQUIRED for Paticipant: Once you done with one mode either Manual or AI-Assisted click on the Return to Main Menu button which is situated down below.  After you complete the both mode. Plz submit the data  ")
         st.error("Privacy: NO names and Ip addresses are recorded.")
         st.write("1.Please Click the button below to download your results.")
         st.write("2.Please Email the file to: **adhika108@coventry.ac.uk which will be use for study purpose . All the information are kept confidentially. Thank you for the participaion. Please download the csv file and send it to researcher.Once you done with one mode either Manual or AI-Assisted click on the Return to Main Menu button which is situated down below. After you complete the both mode. Plz submit the data to adhika108@coventry.ac.uk**")
         
+        # Download handler: Encodes the DataFrame to a CSV string for user export
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Results (CSV)", csv, "baggage_results.csv", "text/csv")
 
