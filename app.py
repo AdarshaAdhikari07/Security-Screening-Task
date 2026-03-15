@@ -148,7 +148,7 @@ def run_system_verification():
 
 # 5. UI LAYOUT: ETHICS GATEWAY (PHASE 1)
 
-st.title(" Security Screening Simulation")
+st.title(" Security Screening Task")
  
 # Ensure research follows BPS/Institutional Ethical guidelines for Informed Consent
 if not st.session_state.consent_given:
