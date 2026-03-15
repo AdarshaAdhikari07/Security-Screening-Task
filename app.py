@@ -4,13 +4,13 @@ import time
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+ 
 # ==========================================
 # 1. APP CONFIGURATION & UI STYLING
 # ==========================================
 # Defining page metadata and a centered layout to minimize participant eye-strain
-st.set_page_config(page_title="Security Screening Task", page_icon="", layout="centered")
-
+st.set_page_config(page_title="Security Screening Simulation", page_icon="", layout="centered")
+ 
 # Custom CSS for Red Decision Buttons
 # This ensures that 'Action' buttons are highly visible, standardizing the visual search time across all participants
 st.markdown("""
@@ -31,7 +31,7 @@ st.markdown("""
     }
     </style>
     """, unsafe_allow_html=True)
-
+ 
 # ==========================================
 # 2. SESSION STATE MANAGEMENT (RESEARCH TELEMETRY)
 # ==========================================
@@ -47,7 +47,7 @@ if 'has_threat' not in st.session_state: st.session_state.has_threat = False
 if 'start_time' not in st.session_state: st.session_state.start_time = 0
 if 'mode' not in st.session_state: st.session_state.mode = "Manual"
 if 'verification_result' not in st.session_state: st.session_state.verification_result = None
-
+ 
 # ==========================================
 # 3. ASSET LIBRARY (SIMULATED STIMULI)
 # ==========================================
@@ -57,7 +57,7 @@ SAFE_ITEMS = [
     '🎧', '📱', '🧴', '📔', '🖊️', '☂️', '🧥', '🪥'
 ]
 THREAT_ITEMS = ['✂️', '🔥', '💧', '🧨', '🚬', '🧪']
-
+ 
 # ==========================================
 # 4. CORE RESEARCH FUNCTIONS
 # ==========================================
@@ -82,7 +82,7 @@ def generate_bag():
     
     # Timestamp used to calculate reaction time (Latency)
     st.session_state.start_time = time.time()
-
+ 
 def process_decision(user_rejected):
     """
     Telemetry Processor: Logs User Latency, Mode, and Ground Truth.
@@ -112,15 +112,15 @@ def process_decision(user_rejected):
         generate_bag() # Proceed to next stimulus
     else:
         st.session_state.simulation_active = False # End of block reached
-
-def restart_game():
+ 
+def reset_simulation():
     """System Reset: Clears session cache to allow for a clean new trial run."""
     st.session_state.rounds = 0
     st.session_state.score = 0
     st.session_state.simulation_active = False
     st.session_state.verification_result = None
     st.rerun()
-
+ 
 def run_system_verification():
     """
     Monte Carlo System Verification: Validates algorithm convergence.
@@ -144,29 +144,28 @@ def run_system_verification():
     progress_bar.progress(1.0)
     # Store verification results for visual proof in Developer Mode
     st.session_state.verification_result = pd.DataFrame(logs)
-
+ 
 # ==========================================
 # 5. UI LAYOUT: ETHICS GATEWAY (PHASE 1)
 # ==========================================
-st.title(" Security Screening Task")
-
+st.title(" Security Screening Simulation")
+ 
 # Ensure research follows BPS/Institutional Ethical guidelines for Informed Consent
 if not st.session_state.consent_given:
     st.header("📄 Participant Information & Consent")
     with st.expander("READ FIRST: Participant Information Sheet", expanded=True):
         st.subheader("Human-in-the-Loop System : A Comparative Study Of Manual and AI-Assisted Security Screening")
         st.write("**Researcher:** Adarsha Adhikari | **Supervisor:** Dr Mark Eslaw ")
-        st.write("**** ")
         st.markdown(f"""
-        **Purpose:** This research aims to compare the prototypes of Manual and AI-Assisted modes for security screening in order to study "Automation Bias" .
+        **Purpose:** This research aims to compare the prototypes of Manual and AI-Assisted modes for security screening in order to study "Automation Bias".
         
-        **Procedure:** You are required to detect threat items by inspecting 10 bags, each in two different modes : Manual and AI-Assisted.
+        **Procedure:** You are required to detect threat items by inspecting 10 bags, each in two different modes: Manual and AI-Assisted.
         
-        **Privacy:** No names, IP addresses, or Personal Identified Data  are recorded.
+        **Privacy:** No names, IP addresses, or Personal Identified Data are recorded.
         
-        **Data Submission:** After completing the inspection download the anonymous CSV file and email it to **adhika108@coventry.ac.uk**.
+        **Data Submission:** After completing the inspection, download the anonymous CSV file and email it to **adhika108@coventry.ac.uk**.
         """)
-
+ 
     st.subheader("✅ Informed Consent")
     st.write("Please check each box to indicate your agreement:")
     c1 = st.checkbox("I confirm that I have read and understood the Information Sheet.")
@@ -174,7 +173,7 @@ if not st.session_state.consent_given:
     c3 = st.checkbox("I understand my participation is voluntary and I can withdraw by closing my browser.")
     c4 = st.checkbox("I understand the results will be used for academic research.")
     c5 = st.checkbox("I agree to take part and confirm I am 18+ years of age.")
-
+ 
     # Validation: Participants cannot proceed unless all boxes are checked
     if st.button("I Consent & Agree to Participate") : 
         if all([c1, c2, c3, c4, c5]):
@@ -183,45 +182,45 @@ if not st.session_state.consent_given:
         else:
             st.error("Please check all boxes to proceed.")
     st.stop()
-
+ 
 # ==========================================
 # 6. UI: MAIN MENU & MISSION BRIEFING (PHASE 2)
 # ==========================================
 if not st.session_state.simulation_active and st.session_state.rounds == 0:
-    st.markdown("### 📋 Task Briefing")
+    st.markdown("### 📋 Mission Briefing")
     st.info("""
     **Role:** Security Officer.
     **Objective:** Detect prohibited threat items.
-
+ 
     **Important Notice:**
     * These are **artificially created symbolic images**, not real luggage X-rays.
     * You are testing a **prototype AI assistant** designed to identify potential threats.
     * Please examine the luggage and decide, based on your **own judgment**, whether it is safe or not.
     """)
-
+ 
     # --- Calibration Area: Displays Target Threats ---
     st.markdown("#### ⚠️ TARGET THREATS (Prohibited):")
     threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
     st.markdown(f"<div style='background-color: #262730; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;'>{threat_html}</div>", unsafe_allow_html=True)
-
+ 
     # --- NEW: Baseline Display (Safe Items) ---
     st.markdown("#### ✅ SAFE ITEMS (Secure):")
     safe_html = " ".join([f"<span style='font-size:35px; margin:0 8px;'>{x}</span>" for x in SAFE_ITEMS])
     st.markdown(f"<div style='background-color: #1E1E1E; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; border: 1px solid #4CAF50;'>{safe_html}</div>", unsafe_allow_html=True)
-
+ 
     # Participant and Developer separation for experimental control
     col1, col2 = st.columns(2)
     with col1:
         st.success("👤 **Participant Mode**")
         if st.button("Start Manual Mode", use_container_width=True):
-            st.session_state.mode, st.session_state.game_active = "Manual", True
+            st.session_state.mode, st.session_state.simulation_active = "Manual", True
             generate_bag()
             st.rerun()
         if st.button("Start AI-Assisted Mode", use_container_width=True):
-            st.session_state.mode, st.session_state.game_active = "AI_Assist", True
+            st.session_state.mode, st.session_state.simulation_active = "AI_Assist", True
             generate_bag()
             st.rerun()
-
+ 
     with col2:
         st.warning("⚙️ **Developer Mode**")
         # Function to audit the internal math of the app before live testing
@@ -232,18 +231,17 @@ if not st.session_state.simulation_active and st.session_state.rounds == 0:
             st.write(f"**Trials:** {len(df_audit):,}")
             st.write(f"**AI Reliability:** {(df_audit['AI_Correct'].mean()) * 100:.2f}%")
             st.write(f"**Threat Rate:** {(df_audit['Ground_Truth'].mean()) * 100:.2f}%")
-            
-
+ 
 # ==========================================
 # 7. UI: ACTIVE SCREENING LOOP (PHASE 3)
 # ==========================================
-elif st.session_state.game_active:
+elif st.session_state.simulation_active:
     st.progress(st.session_state.rounds / 10, f"Bag {st.session_state.rounds+1}/10")
     
     # Stimulus Display Area
     bag_html = " ".join([f"<span style='font-size:55px; padding:10px;'>{x}</span>" for x in st.session_state.current_bag])
     st.markdown(f"<div style='background:#111; border:4px solid #444; border-radius:15px; padding:30px; text-align:center;'>{bag_html}</div>", unsafe_allow_html=True)
-
+ 
     # Implementation of the Independent Variable: AI Advice
     if st.session_state.mode == "AI_Assist":
         # Simulate AI prediction (Imperfect: 85% Accurate)
@@ -257,7 +255,7 @@ elif st.session_state.game_active:
     else:
         # Control Condition: No Decision Support
         st.warning("📡 AI SYSTEM OFFLINE: Manual Inspection Required", icon="🛑")
-
+ 
     st.write("")
     col_a, col_b = st.columns(2)
     with col_a:
@@ -266,12 +264,12 @@ elif st.session_state.game_active:
     with col_b:
         # Captures Signal Detection 'Positive' response
         if st.button("🚨 REPORT THREAT", use_container_width=True): process_decision(True); st.rerun()
-
+ 
 # ==========================================
 # 8. UI: DATA VISUALIZATION & SUBMISSION (PHASE 4)
 # ==========================================
 else:
-    st.success(f"Session Complete. Final Score: {st.session_state.score}")
+    st.success(f"Simulation Complete. Final Score: {st.session_state.score}")
     if len(st.session_state.history) > 0:
         df = pd.DataFrame(st.session_state.history)
         st.divider()
@@ -295,19 +293,19 @@ else:
             ax2.set_ylim(0, 105)
             ax2.set_ylabel("Accuracy (%)")
             st.pyplot(fig2)
-
+ 
         with tab3:
             # Visual check for the raw telemetry log
             st.dataframe(df, use_container_width=True)
         
         # Final Instructions for Data Collection
-        st.error(" ACTION REQUIRED for Paticipant: Once you done with one mode either Manual or AI-Assisted click on the Return to Main Menu button which is situated down below.  After you complete the both mode. Plz submit the data  ")
-        st.error("Privacy: NO names and Ip addresses are recorded.")
-        st.write("1.Please Click the button below to download your results.")
-        st.write("2.Please Email the file to: **adhika108@coventry.ac.uk which will be use for study purpose . All the information are kept confidentially. Thank you for the participaion. Please download the csv file and send it to researcher.Once you done with one mode either Manual or AI-Assisted click on the Return to Main Menu button which is situated down below. After you complete the both mode. Plz submit the data to adhika108@coventry.ac.uk**")
+        st.error(" ACTION REQUIRED for Participant: Once you are done with one mode (either Manual or AI-Assisted), click the 'Return to Main Menu' button below. After completing both modes, please submit your data.")
+        st.error("Privacy: NO names or IP addresses are recorded.")
+        st.write("1. Please click the button below to download your results.")
+        st.write("2. Please email the file to: **adhika108@coventry.ac.uk**. This data will be used for research purposes and kept strictly confidential. Once you have finished one mode, return to the main menu to complete the other before downloading.")
         
         # Download handler: Encodes the DataFrame to a CSV string for user export
         csv = df.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Results (CSV)", csv, "baggage_results.csv", "text/csv")
-
+        st.download_button("📥 Download Simulation Results (CSV)", csv, "simulation_results.csv", "text/csv")
+ 
     if st.button("🔄 Return to Main Menu"): reset_simulation()
