@@ -5,9 +5,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
  
-# ==========================================
+
 # 1. APP CONFIGURATION & UI STYLING
-# ==========================================
+
 # Defining page metadata and a centered layout to minimize participant eye-strain
 st.set_page_config(page_title="Security Screening Simulation", page_icon="", layout="centered")
  
@@ -32,9 +32,9 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
  
-# ==========================================
+
 # 2. SESSION STATE MANAGEMENT (RESEARCH TELEMETRY)
-# ==========================================
+
 # Using Streamlit's session_state to maintain persistent variables across trial re-runs
 # This acts as the 'Temporary Database' for storing real-time performance data
 if 'consent_given' not in st.session_state: st.session_state.consent_given = False
@@ -48,9 +48,9 @@ if 'start_time' not in st.session_state: st.session_state.start_time = 0
 if 'mode' not in st.session_state: st.session_state.mode = "Manual"
 if 'verification_result' not in st.session_state: st.session_state.verification_result = None
  
-# ==========================================
+
 # 3. ASSET LIBRARY (SIMULATED STIMULI)
-# ==========================================
+
 # Symbolic icons used to isolate cognitive screening ability from professional domain knowledge
 SAFE_ITEMS = [
     '👕', '👖', '👗', '👟', '🎩', '📚', '🧸', '🥪', '🕶️', 
@@ -58,9 +58,9 @@ SAFE_ITEMS = [
 ]
 THREAT_ITEMS = ['✂️', '🔥', '💧', '🧨', '🚬', '🧪']
  
-# ==========================================
-# 4. CORE RESEARCH FUNCTIONS
-# ==========================================
+
+# 4. CORE  FUNCTIONS
+
 def generate_bag():
     """
     Stochastic Generator: Creates a unique trial bag with a 40% threat prevalence.
@@ -145,9 +145,9 @@ def run_system_verification():
     # Store verification results for visual proof in Developer Mode
     st.session_state.verification_result = pd.DataFrame(logs)
  
-# ==========================================
+
 # 5. UI LAYOUT: ETHICS GATEWAY (PHASE 1)
-# ==========================================
+
 st.title(" Security Screening Simulation")
  
 # Ensure research follows BPS/Institutional Ethical guidelines for Informed Consent
@@ -183,11 +183,11 @@ if not st.session_state.consent_given:
             st.error("Please check all boxes to proceed.")
     st.stop()
  
-# ==========================================
-# 6. UI: MAIN MENU & MISSION BRIEFING (PHASE 2)
-# ==========================================
+
+# 6. UI: MAIN MENU & Task BRIEFING (PHASE 2)
+
 if not st.session_state.simulation_active and st.session_state.rounds == 0:
-    st.markdown("### 📋 Mission Briefing")
+    st.markdown("### 📋 Task Briefing")
     st.info("""
     **Role:** Security Officer.
     **Objective:** Detect prohibited threat items.
@@ -232,9 +232,9 @@ if not st.session_state.simulation_active and st.session_state.rounds == 0:
             st.write(f"**AI Reliability:** {(df_audit['AI_Correct'].mean()) * 100:.2f}%")
             st.write(f"**Threat Rate:** {(df_audit['Ground_Truth'].mean()) * 100:.2f}%")
  
-# ==========================================
+
 # 7. UI: ACTIVE SCREENING LOOP (PHASE 3)
-# ==========================================
+
 elif st.session_state.simulation_active:
     st.progress(st.session_state.rounds / 10, f"Bag {st.session_state.rounds+1}/10")
     
@@ -265,9 +265,9 @@ elif st.session_state.simulation_active:
         # Captures Signal Detection 'Positive' response
         if st.button("🚨 REPORT THREAT", use_container_width=True): process_decision(True); st.rerun()
  
-# ==========================================
+
 # 8. UI: DATA VISUALIZATION & SUBMISSION (PHASE 4)
-# ==========================================
+
 else:
     st.success(f"Simulation Complete. Final Score: {st.session_state.score}")
     if len(st.session_state.history) > 0:
