@@ -41,7 +41,7 @@ if 'consent_given' not in st.session_state: st.session_state.consent_given = Fal
 if 'score' not in st.session_state: st.session_state.score = 0
 if 'rounds' not in st.session_state: st.session_state.rounds = 0
 if 'history' not in st.session_state: st.session_state.history = []
-if 'game_active' not in st.session_state: st.session_state.game_active = False
+if 'simulation_active' not in st.session_state: st.session_state.simulation_active = False
 if 'current_bag' not in st.session_state: st.session_state.current_bag = []
 if 'has_threat' not in st.session_state: st.session_state.has_threat = False
 if 'start_time' not in st.session_state: st.session_state.start_time = 0
@@ -111,13 +111,13 @@ def process_decision(user_rejected):
     if st.session_state.rounds < 10:
         generate_bag() # Proceed to next stimulus
     else:
-        st.session_state.game_active = False # End of block reached
+        st.session_state.simulation_active = False # End of block reached
 
 def restart_game():
     """System Reset: Clears session cache to allow for a clean new trial run."""
     st.session_state.rounds = 0
     st.session_state.score = 0
-    st.session_state.game_active = False
+    st.session_state.simulation_active = False
     st.session_state.verification_result = None
     st.rerun()
 
@@ -187,8 +187,8 @@ if not st.session_state.consent_given:
 # ==========================================
 # 6. UI: MAIN MENU & MISSION BRIEFING (PHASE 2)
 # ==========================================
-if not st.session_state.game_active and st.session_state.rounds == 0:
-    st.markdown("### 📋 Mission Briefing")
+if not st.session_state.simulation_active and st.session_state.rounds == 0:
+    st.markdown("### 📋 Task Briefing")
     st.info("""
     **Role:** Security Officer.
     **Objective:** Detect prohibited threat items.
@@ -310,4 +310,4 @@ else:
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Download Results (CSV)", csv, "baggage_results.csv", "text/csv")
 
-    if st.button("🔄 Return to Main Menu"): restart_game()
+    if st.button("🔄 Return to Main Menu"): reset_simulation()
