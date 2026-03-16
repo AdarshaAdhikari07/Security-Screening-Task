@@ -9,7 +9,7 @@ import seaborn as sns
 # 1. APP CONFIGURATION & UI STYLING
 
 # Defining page metadata and a centered layout to minimize participant eye-strain
-st.set_page_config(page_title="Security Screening Simulation", page_icon="", layout="centered")
+st.set_page_config(page_title="Security Screening Task", page_icon="", layout="centered")
  
 # Custom CSS for Red Decision Buttons
 # This ensures that 'Action' buttons are highly visible, standardizing the visual search time across all participants
