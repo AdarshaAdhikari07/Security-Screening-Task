@@ -306,6 +306,6 @@ else:
         
         # Download handler: Encodes the DataFrame to a CSV string for user export
         csv = df.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Simulation Results (CSV)", csv, "simulation_results.csv", "text/csv")
+        st.download_button("📥 Download Simulation Results (CSV)", csv, "P00_results.csv", "text/csv")
  
     if st.button("🔄 Return to Main Menu"): reset_simulation()
