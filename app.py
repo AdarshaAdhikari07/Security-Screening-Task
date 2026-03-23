@@ -194,7 +194,7 @@ if not st.session_state.simulation_active and st.session_state.rounds == 0:
  
     **Important Notice:**
     * These are **artificially created symbolic images**, not real luggage X-rays.
-    * You are testing a **prototype AI assistant** designed to identify potential threats.
+    * You are testing a **prototype AI assistant** having 85% reliability designed to identify potential threats.
     * Please examine the luggage and decide, based on your **own judgment**, whether it is safe or not.
     """)
  
