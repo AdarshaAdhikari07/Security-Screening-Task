@@ -1,50 +1,52 @@
+# HUMAN-IN-THE-LOOP: A Comparative Study of Manual and AI-Assisted Security Screening
 
-HUMAN-IN-THE-LOOP  SYSTEM:  A Comparative Study Of Manual and AI-Assisted Security Screening
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge.svg)](https://security-screening.streamlit.app/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
+##  Project Overview
+This software is a **Security Inspection System** developed for research into **Automation Bias** and **Verification Latency** in aviation and border security contexts. Unlike studies using static image datasets, this system utilizes a custom **Stochastic Procedural Content Generation (PCG) Engine** to create randomized luggage layouts for every trial, ensuring the measurement of true visual vigilance.
 
-1. PROJECT OVERVIEW
--------------------
-This software is a 'Security Inspection System' developed in Python
-(Streamlit) for research into "Automation Bias" and "Verification
-Latency" in  security screening. 
+The project quantifies the "Speed-Accuracy Trade-off" when human operators are assisted by an imperfect AI agent (85% reliability).
 
-Instead of static images, the system uses a Stochastic Procedural Content 
-Generation (PCG) engine to create randomized luggage bags for every trial, 
-ensuring the assessment of true visual vigilance.
+##  Core Features
+* **Stochastic PCG Engine:** Procedural generation of stimuli using Unicode symbols to simulate threat and non-threat items, maintaining a fixed **40% threat prevalence**.
+* **Imperfect AI Agent:** A simulated assistant with a calibrated **85% reliability rate** to test human-AI trust calibration.
+* **High-Resolution Telemetry:** Captures decision accuracy, verification latency (ms), and Signal Detection Theory (SDT) outcome frequencies.
+* **SDT Analytics:** Integrated framework to calculate sensitivity ($d'$) and response bias ($\ln\beta$).
 
-2. CORE FEATURES
-----------------
-* Stochastic PCG: Randomizes  luggage layouts using Unicode symbols 
-  for threat and non-threat items.
-* Imperfect AI Agent: Simulated assistant with 85% reliability (P=0.85) 
-  to test trust calibration.
-* Telemetry Logging: Captures reaction time (ms), decision accuracy, 
-  and interaction mode into a structured CSV format.
+##  Technical Stack
+* **Framework:** [Streamlit](https://streamlit.io/) (Web-based Interface)
+* **Language:** Python 3.10+
+* **Data Science:** Pandas, NumPy, SciPy (Statistical T-tests)
+* **Visualization:** Matplotlib, Seaborn (KDE & Boxplots)
+* **Verification:** Monte Carlo simulation ($N=10,000$) to confirm stochastic convergence of AI reliability.
 
-3. TARGET THREATS
------------------
-Participants act as Security Officers to identify:
-Threat iteams  
+##  Experimental Results (30 Participants)
+The study identified a statistically significant **Automation Bias** effect:
+* **Accuracy:** Dropped from **94.0%** (Manual) to **85.7%** (AI-Assisted) ($p = 0.0275$).
+* **Latency:** Significant speed gain ($p = 0.0376$), proving participants bypassed critical verification to save time.
+* **Decision Strategy:** A shift toward a **liberal response bias** ($\ln\beta$ from 0.483 to 0.394), leading to increased omission errors (misses).
 
+##  Installation & Usage
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/AdarshaAdhikari07/Security-Screening-Task.git](https://github.com/AdarshaAdhikari07/Security-Screening-Task.git)
+    cd Security-Screening-Task
+    ```
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  **Run the application:**
+    ```bash
+    streamlit run app.py
+    ```
 
+##  Ethical Considerations
+* **Project Ref:** P192826 (Coventry University)
+* **Privacy by Design:** No Personally Identifiable Information (PII) is captured.
+* **Informed Consent:** Participants must complete a mandatory 5-point consent checklist prior to data collection.
 
-4. INSTALLATION & USAGE
------------------------
-Requirements: Python 3.9+, Streamlit, Pandas, NumPy, SciPy.
-
-1. Install dependencies:
-   pip install -r requirements.txt
-
-2. Run the application:
-   streamlit run app.py
-
-6. ETHICAL CONSIDERATIONS
--------------------------
-Project Ref: P192826
-The study uses 'Privacy by Design'—no personal identifiable information 
-(PII) is captured. All participants must pass a 5-point 
-informed consent checklist before beginning
-
-7. CONTACT
-----------
-Student Name: Adarsha Adhikari 
+## 👤 Contact
+**Adarsha Adhikari** MSc Artificial Intelligence and Human Factors  
+Coventry University
