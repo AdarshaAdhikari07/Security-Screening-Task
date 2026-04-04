@@ -1,10 +1,10 @@
-# HUMAN-IN-THE-LOOP: A Comparative Study of Manual and AI-Assisted Security Screening
+# Human-in-the-Loop System : A Comparative Study Of Manual and AI-Assisted Security Screening
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge.svg)](https://security-screening.streamlit.app/)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python ](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ##  Project Overview
-This software is a **Security Inspection System** developed for research into **Automation Bias** and **Verification Latency** in aviation and border security contexts. Unlike studies using static image datasets, this system utilizes a custom **Stochastic Procedural Content Generation (PCG) Engine** to create randomized luggage layouts for every trial, ensuring the measurement of true visual vigilance.
+This software is a **Security Inspection System** developed for research into **Automation Bias** and **Verification Latency** in  security screening contexts. Unlike studies using static image datasets, this system utilizes a custom **Stochastic Procedural Content Generation (PCG) Engine** to create randomized luggage layouts for every trial, ensuring the measurement of true visual vigilance.
 
 The project quantifies the "Speed-Accuracy Trade-off" when human operators are assisted by an imperfect AI agent (85% reliability).
 
@@ -16,7 +16,7 @@ The project quantifies the "Speed-Accuracy Trade-off" when human operators are a
 
 ##  Technical Stack
 * **Framework:** [Streamlit](https://streamlit.io/) (Web-based Interface)
-* **Language:** Python 3.10+
+* **Language:** Python 
 * **Data Science:** Pandas, NumPy, SciPy (Statistical T-tests)
 * **Visualization:** Matplotlib, Seaborn (KDE & Boxplots)
 * **Verification:** Monte Carlo simulation ($N=10,000$) to confirm stochastic convergence of AI reliability.
