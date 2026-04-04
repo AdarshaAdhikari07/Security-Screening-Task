@@ -47,6 +47,10 @@ The study identified a statistically significant **Automation Bias** effect:
 * **Privacy by Design:** No Personally Identifiable Information (PII) is captured.
 * **Informed Consent:** Participants must complete a mandatory 5-point consent checklist prior to data collection.
 
-## 👤 Contact
-**Adarsha Adhikari** MSc Artificial Intelligence and Human Factors  
-Coventry University
+##  Contact
+**Adarsha Adhikari** 
+Artificial Intelligence & Human Factor MSc
+
+##  Supervisor
+**Dr Mark Eslaw**
+
