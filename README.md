@@ -4,7 +4,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ##  Project Overview
-This software is a **Security Inspection System** developed for research into **Automation Bias** and **Verification Latency** in  security screening contexts. Unlike studies using static image datasets, this system utilizes a custom **Stochastic Procedural Content Generation (PCG) Engine** to create randomized luggage layouts for every trial, ensuring the measurement of true visual vigilance.
+This software is a **Security Screening System** developed for research into **Automation Bias** and **Verification Latency** in  security screening contexts. Unlike studies using static image datasets, this system utilizes a custom **Stochastic Procedural Content Generation (PCG) Engine** to create randomized luggage layouts for every trial, ensuring the measurement of true visual vigilance.
 
 The project quantifies the "Speed-Accuracy Trade-off" when human operators are assisted by an imperfect AI agent (85% reliability).
 
