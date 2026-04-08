@@ -1,7 +1,6 @@
 # Human-in-the-Loop System : A Comparative Study Of Manual and AI-Assisted Security Screening
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge.svg)](https://security-screening.streamlit.app/)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ##  Project Overview
 This software is a **Security Screening Task** developed for research into **Automation Bias** and **Verification Latency** in  security screening contexts. Unlike studies using static image datasets, this system utilizes a custom **Stochastic Procedural Content Generation (PCG) Engine** to create randomized luggage layouts for every trial, ensuring the measurement of true visual vigilance.
@@ -23,9 +22,7 @@ The project quantifies the "Speed-Accuracy Trade-off" when human operators are a
 
 ##  Experimental Results (30 Participants)
 The study identified a statistically significant **Automation Bias** effect:
-* **Accuracy:** Dropped from **94.0%** (Manual) to **85.7%** (AI-Assisted) ($p = 0.0275$).
-* **Latency:** Significant speed gain ($p = 0.0376$), proving participants bypassed critical verification to save time.
-* **Decision Strategy:** A shift toward a **liberal response bias** ($\ln\beta$ from 0.483 to 0.394), leading to increased omission errors (misses).
+
 
 ##  Installation & Usage
 1.  **Clone the repository:**
