@@ -1,6 +1,7 @@
 # Human-in-the-Loop System : A Comparative Study Of Manual and AI-Assisted Security Screening
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge.svg)](https://security-screening.streamlit.app/)
+https://security-screening.streamlit.app/
 
 ##  Project Overview
 This software is a **Security Screening Task** developed for research into **Automation Bias** and **Verification Latency** in  security screening contexts. Unlike studies using static image datasets, this system utilizes a custom **Stochastic Procedural Content Generation (PCG) Engine** to create randomized luggage layouts for every trial, ensuring the measurement of true visual vigilance.
