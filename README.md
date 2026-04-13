@@ -51,5 +51,5 @@ The study identified a statistically significant **Automation Bias** effect:
 Artificial Intelligence & Human Factor MSc
 
 ##  Supervisor
-**Dr Mark Eslaw**
+**Dr Mark Elshaw**
 
